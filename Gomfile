@@ -1,3 +1,0 @@
-gom 'github.com/gin-gonic/gin'
-#gom 'github.com/yukihir0/mecab-go'
-gom 'github.com/bluele/mecab-golang'

@@ -13,7 +13,7 @@ func parseToNode(m *mecab.MeCab) {
   }
   defer tg.Destroy()
 
-  lt, err := m.NewLattice("すもももももももものうち")
+  lt, err := m.NewLattice("なのはちゃんかわいい")
   if err != nil {
     panic(err)
   }
