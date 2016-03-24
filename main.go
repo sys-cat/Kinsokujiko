@@ -3,7 +3,7 @@ package main
 import (
   "fmt"
   "flag"
-  "github.com/yukihir0/mecab-go"
+  //"github.com/yukihir0/mecab-go"
 )
 
 func main() {
