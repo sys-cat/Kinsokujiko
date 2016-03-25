@@ -3,6 +3,7 @@ package main
 import(
   "fmt"
   "github.com/bluele/mecab-golang"
+  "os"
   "strings"
 )
 
@@ -20,10 +21,12 @@ func parseToNode(m *mecab.MeCab) {
   defer lt.Destroy()
 
   node := tg.ParseToNode(lt)
+  fmt.Println(node.Surface())
   for {
     features := strings.Split(node.Feature(), ",")
-    if features[0] == "名詞" {
-      fmt.Println(fmt.Sprintf("%s %s", node.Surface(), node.Feature()))
+    fmt.Println(features)
+    if features[0] == "名詞" || features[0] == "固有名詞" {
+      fmt.Println(fmt.Sprintf("%s : %s", node.Surface(), node.Feature()))
     }
     if node.Next() != nil {
       break
@@ -32,7 +35,7 @@ func parseToNode(m *mecab.MeCab) {
 }
 
 func main() {
-  m, err := mecab.New("-Owakati")
+  m, err := mecab.New("-Owakati -d " + os.Getenv("NEOLOGD"))
   if err != nil {
     panic(err)
   }
