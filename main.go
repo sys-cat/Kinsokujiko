@@ -5,28 +5,43 @@ import (
   //"fmt"
 )
 
-type GetListName struct {
-  Value string `json:"key"`
-  //Text string `json:text`
+type Mask struct {
+  String  string `json:"string"`
+  Lists   string `json:"list"`
+  Key     string `json:"authorized_key"`
 }
 
 func main() {
   router := gin.Default()
 
-  router.POST("/list", func(c *gin.Context) {
-    var val GetListName
-    c.Bind(&val)
-    //c.String(200, val.Value)
-    c.JSON(200, val)
-  })
-  router.Run(":3000")
+  v1 := router.Group("/v1")
+  {
+    v1.POST("/mask", maskingString)
+    v1.GET("/list/:id", getList)
+    v1.POST("/list/add", addList)
+    v1.POST("/list/edit", editList)
+    //v1.GET("/list/del/:del_id", deleteList)
+  }
+  router.Run(":8080")
 }
 
-func getBlackList(c *gin.Context) {
-  var val GetListName
-  c.Bind(&val)
-  c.JSON(200, val.Value)
-/*  c.JSON(200, gin.H{
-    "return":val.Value,
-  })*/
+func maskingString(c *gin.Context) {
+  var val Mask
+  c.BindJSON(&val)
+  c.JSON(200, gin.H{
+    "status" : 200,
+    "result" : val.String + " : " + val.Lists,
+  })
+}
+
+func addList(c *gin.Context) {
+}
+
+func editList(c *gin.Context) {
+}
+
+//func deleteList(c *gin.Context) {
+//}
+
+func getList(c *gin.Context) {
 }
