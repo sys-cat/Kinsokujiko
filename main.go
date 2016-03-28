@@ -2,8 +2,8 @@ package main
 
 import (
   "github.com/gin-gonic/gin"
-  //"github.com/sys-cat/Kinsokujiko/mecab"
-  "./mecab"
+  "github.com/sys-cat/Kinsokujiko/mecab"
+  //"./mecab"
 )
 
 type Mask struct {
