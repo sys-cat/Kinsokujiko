@@ -1,17 +1,17 @@
 package mecab
 
 import(
-  "fmt"
   "github.com/bluele/mecab-golang"
   "os"
   "strings"
+  "errors"
 )
 
 type Result struct {
   result string
 }
 
-func parseToNode(m *mecab.MeCab, mask string, list []string)(mask string, err error) {
+func parseToNode(m *mecab.MeCab, mask string, list []string)(result string, err error) {
   tg, err  := m.NewTagger()
   if err != nil {
     panic(err)
@@ -28,8 +28,8 @@ func parseToNode(m *mecab.MeCab, mask string, list []string)(mask string, err er
     n := node.Surface()
     features := strings.Split(node.Feature(), ",")
     if features[0] == "名詞" || features[0] == "固有名詞" {
-      for l,_ := range list {
-        if l == n {
+      for _,v := range list {
+        if v == n {
           n = strings.Repeat("*", len(n))
         }
       }
@@ -43,8 +43,8 @@ func parseToNode(m *mecab.MeCab, mask string, list []string)(mask string, err er
 }
 
 func Masking(val string, list []string)(result string, err error) {
-  if val == nil || list == nil {
-    return "", "no data."
+  if val == "" || len(list) == 0 {
+    return "", errors.New("no data.")
   }
   m, err := mecab.New("-Owakati -d " + os.Getenv("NEOLOGD"))
   if err != nil {
