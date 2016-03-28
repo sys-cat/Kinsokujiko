@@ -3,7 +3,6 @@ package main
 import (
   "github.com/gin-gonic/gin"
   "github.com/sys-cat/Kinsokujiko/mecab"
-  //"./mecab"
 )
 
 type Mask struct {
@@ -18,10 +17,18 @@ func main() {
   v1 := router.Group("/v1")
   {
     v1.POST("/mask/", maskingString)
+    // list manage statement
     v1.POST("/list/add/", addList)
     v1.POST("/list/edit/", editList)
     v1.GET("/list/:id/", getList)
     v1.GET("/list/:id/del/", deleteList)
+    // dictionary manage statement
+    v1.POST("/dic/add/", func(c *gin.Context){})
+    v1.GET("/dic/get/", func(c *gin.Context){})
+    v1.POST("/dic/edit/", func(c *gin.Context){})
+    v1.GET("/dic/del/:id/", func(c *gin.Context){})
+    v1.GET("/dic/rehash/", func(c *gin.Context){})
+    // auth statement
     v1.GET("/get/authorize/key/", getAuthorize)
   }
   router.Run(":8080")
