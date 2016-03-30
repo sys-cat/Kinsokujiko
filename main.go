@@ -35,6 +35,10 @@ func main() {
 }
 
 func maskingString(c *gin.Context) {
+  c.Header("Access-Control-Allow-Origin", "http://localhost")
+  c.Header("Access-Control-Allow-Credentials", "true")
+  c.Header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization")
+  c.Header("Access-Control-Allow-Methods","GET, POST, PUT, DELETE, OPTIONS")
   var val Mask
   c.BindJSON(&val)
   masked, err := mecab.Masking(val.String, val.List)
