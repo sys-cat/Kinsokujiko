@@ -1,0 +1,8 @@
+# Will can Use SQLite, MySQL, MariaDB, ES(ElasticSearch).
+[db]
+type = "SQLite"
+port = ""
+host = ""
+user = ""
+pass = ""
+path = "./../db/main.db"

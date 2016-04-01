@@ -2,7 +2,8 @@ package main
 
 import (
   "github.com/gin-gonic/gin"
-  "github.com/sys-cat/Kinsokujiko/mecab"
+  "./mecab"
+  "./db"
 )
 
 type Mask struct {
@@ -34,11 +35,15 @@ func main() {
   router.Run(":8080")
 }
 
-func maskingString(c *gin.Context) {
+func setAccessHeader(c *gin.Context) {
   c.Header("Access-Control-Allow-Origin", "http://localhost")
   c.Header("Access-Control-Allow-Credentials", "true")
   c.Header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization")
   c.Header("Access-Control-Allow-Methods","GET, POST, PUT, DELETE, OPTIONS")
+}
+
+func maskingString(c *gin.Context) {
+  setAccessHeader(c)
   var val Mask
   c.BindJSON(&val)
   masked, err := mecab.Masking(val.String, val.List)
@@ -55,7 +60,13 @@ func maskingString(c *gin.Context) {
   }
 }
 
-func addList(c *gin.Context) {}
+func addList(c *gin.Context) {
+  setAccessHeader(c)
+  c.JSON(200, gin.H{
+    "status" : 200,
+    "result" : "nothing"
+  })
+}
 
 func editList(c *gin.Context) {}
 
