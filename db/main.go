@@ -2,6 +2,7 @@ package main
 
 import (
   "../config"
+  _ "github.com/mattn/go-sqlite3"
 )
 
 const DBTYPE = []string{
@@ -28,9 +29,18 @@ type Item struct{
 
 func main {
   config := config.Toml()
-  for key, value := range DBTYPE {
-    if config.Db.Type == value {
-      // 変数の値を関数名にする方法
+  switch config.Db.Type {
+    case "SQLite":
+      return SQLite(config)
+    case "MySQL":
+      return MySQL(config)
+    case "MariaDB":
+      return MariaDB(config)
+    case "ES":
+      return ES(config)
     }
-  }
+}
+
+func SQLite(c *config.Config) {
+  db, err := sql.Open(c.Db.Type, c.Db.Path)
 }
