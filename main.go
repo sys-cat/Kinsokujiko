@@ -4,12 +4,17 @@ import (
   "github.com/gin-gonic/gin"
   "./mecab"
   "./db"
+  "./config"
 )
 
 type Mask struct {
   String  string `json:"string"`
   List    []string `json:"list"`
   Key     string `json:"auth"`
+}
+
+func init() {
+  config.Set()
 }
 
 func main() {
