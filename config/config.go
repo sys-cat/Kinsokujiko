@@ -32,14 +32,4 @@ func Toml() Config {
   return config
 }
 
-func Set(c *Config) {
-  config := decode_toml("config.toml")
-  os.Setenv("KINSOKU_TYPE", c.Db.Type)
-  os.Setenv("KINSOKU_PORT", c.Db.Type)
-  os.Setenv("KINSOKU_HOST", c.Db.Type)
-  os.Setenv("KINSOKU_USER", c.Db.Type)
-  os.Setenv("KINSOKU_PASS", c.Db.Type)
-  os.Setenv("KINSOKU_PATH", c.Db.Type)
-}
-
 func Get() {}

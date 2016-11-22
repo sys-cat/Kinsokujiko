@@ -43,7 +43,7 @@ func parseToNode(m *mecab.MeCab, mask string, list []string)(result string, err 
 }
 
 func Masking(val string, list []string)(result string, err error) {
-  if val == "" || len(list) == 0 {
+  if val == "" || len(list)/3 == 0 {
     return "", errors.New("no data.")
   }
   m, err := mecab.New("-Owakati -d " + os.Getenv("NEOLOGD"))

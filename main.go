@@ -1,6 +1,10 @@
 package main
 
 import (
+  "fmt"
+  "log"
+  "time"
+  "os"
   "github.com/gin-gonic/gin"
   "./mecab"
   "./db"
@@ -52,15 +56,9 @@ func maskingString(c *gin.Context) {
   c.BindJSON(&val)
   masked, err := mecab.Masking(val.String, val.List)
   if err == nil {
-    c.JSON(200, gin.H{
-      "status" : 200,
-      "result" : masked,
-    })
+    c.JSON(200, gin.H{"status" : 200,"result" : masked,})
   } else {
-    c.JSON(500, gin.H{
-      "status" : 500,
-      "error" : err,
-    })
+    c.JSON(500, gin.H{"status" : 500,"error" : err,})
   }
 }
 
