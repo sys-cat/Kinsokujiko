@@ -4,7 +4,6 @@ import (
   "os"
   "../config"
   "database/sql"
-  _ "github.com/mattn/go-sqlite3"
 )
 
 const DBTYPE = []string{
