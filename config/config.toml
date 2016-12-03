@@ -1,8 +1,0 @@
-# Will can Use SQLite, MySQL, MariaDB, ES(ElasticSearch).
-[db]
-type = "sqlite3"
-port = ""
-host = ""
-user = ""
-pass = ""
-path = "./../db/main.db"
