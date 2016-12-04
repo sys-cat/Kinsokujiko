@@ -1,3 +1,11 @@
+gom 'github.com/BurntSushi/toml', :commit => 'bbd5bb678321a0d6e58f1099321dfa73391c1b6f'
+gom 'github.com/bluele/mecab-golang', :commit => '829ff06d3a7b8742bde05c660592149b258103dc'
+gom 'github.com/gin-gonic/gin', :commit => '3d002e382355cafc15d706b92899b1961d5b79e9'
+gom 'github.com/golang/protobuf', :commit => '8d92cf5fc15a4382f8964b08e1f42a75c0591aa3'
+gom 'github.com/manucorporat/sse', :commit => 'ee05b128a739a0fb76c7ebd3ae4810c1de808d6d'
+gom 'github.com/mattn/go-sqlite3', :commit => 'fba66eb11643069e747022997e9be3b502b2c6fb'
+gom 'golang.org/x/net', :commit => '1dd0d85fc0634d2dbe7f7d06d176c2ff548e6332'
+gom 'gopkg.in/go-playground/validator.v8', :commit => '014792cf3e266caff1e916876be12282b33059e0'
+
 gom 'github.com/ikawaha/kagome'
-gom 'github.com/k0kubun/pp'
-gom 'github.com/mattn/go-colorable'
+gom 'github.com/ikawaha/kagome/tokenizer'
