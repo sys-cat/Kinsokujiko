@@ -1,6 +1,8 @@
 package main
 
 import (
+	"net/http"
+	"github.com/gin-gonic/gin"
 	"github.com/ikawaha/kagome/tokenizer"
 	"github.com/k0kubun/pp"
 )
@@ -10,15 +12,39 @@ var sample = `日本国民は、正当に選挙された国会における代表
 　われらは、いづれの国家も、自国のことのみに専念して他国を無視してはならないのであつて、政治道徳の法則は、普遍的なものであり、この法則に従ふことは、自国の主権を維持し、他国と対等関係に立たうとする各国の責務であると信ずる。
 　日本国民は、国家の名誉にかけ、全力をあげてこの崇高な理想と目的を達成することを誓ふ。`
 
-var pos = "名詞"
+const pos = "名詞"
+var count int = 0
 
 func main() {
-	t := tokenizer.New()
+	router := gin.Default()
+	v1 := router.Group("/v1")
+	{
+		v1.GET("/mask", mask)
+		v1.GET("/dic", dic)
+	}
+	router.Run(":8080")
+}
+
+func mask(c *gin.Context) {
+	c.JSON(http.StatusOK, gin.H{"response":"OK"})
+}
+
+func dic(c *gin.Context) {
+	c.JSON(http.StatusOK, gin.H{"response":"OK"})
+}
+
+func morphological() int {
+	var dic tokenizer.Dic
+	dic = tokenizer.SysDicIPA()
+	pp.Print(dic)
+	t := tokenizer.NewWithDic(dic)
 	tokens := t.Analyze(sample, tokenizer.Normal)
 	for _, token := range tokens {
 		if token.Pos() == pos {
-			pp.Printf("%s : %s\n", token.Surface, token.Pos())
+			//pp.Printf("%s : %s\n", token.Surface, token.Pos())
+			count = count + 1
 		}
 		continue
 	}
+	return count
 }
