@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"github.com/ikawaha/kagome/tokenizer"
 	"github.com/k0kubun/pp"
 )
@@ -12,18 +11,14 @@ var sample = `日本国民は、正当に選挙された国会における代表
 　日本国民は、国家の名誉にかけ、全力をあげてこの崇高な理想と目的を達成することを誓ふ。`
 
 var pos = "名詞"
-var count int = 0
 
 func main() {
 	t := tokenizer.New()
 	tokens := t.Analyze(sample, tokenizer.Normal)
 	for _, token := range tokens {
 		if token.Pos() == pos {
-			count = count + 1
-			//pp.Printf("%s : %s\n", token.Surface, token.Pos())
+			pp.Printf("%s : %s\n", token.Surface, token.Pos())
 		}
 		continue
 	}
-	pp.Printf("名詞の件数：%d\n", count)
-	fmt.Printf("名詞の件数：%d\n", count)
 }
