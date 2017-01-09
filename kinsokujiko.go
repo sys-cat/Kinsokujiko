@@ -1,14 +1,28 @@
 package kinsokujiko
 
 import (
-    "net/http"
-    "github.com/labstack/echo"
+	"github.com/ikawaha/kagome/tokenizer"
 )
 
-func main() {
-    e := echo.New()
-    e.GET("/", func(c echo.Context) error {
-        return c.String(http.StatucOK, "hello world")
-    })
-    e.Logger.Fatal(e.Start(":9090"))
+type Master struct {
+	Sentence string
+}
+
+type Surface struct {
+    Surf string
+    Pos string
+} 
+
+type Surfaces struct {
+    []Surface
+}
+
+func tokenize(s Master.Sentence)(Surfaces) {
+	t := tokenizer.New()
+	tokens := t.Analyze(s, tokenizer.Normal)
+    var surf Surfaces
+    for _, token := range tokens {
+        surf = append(surf, &Surface{token.Surface, token.Pos()})
+    }
+    return surf
 }
