@@ -28,3 +28,4 @@ _testmain.go
 !/vendor/.keep
 /dic/*
 !/dic/.keep
+/.glide/*

@@ -13,16 +13,14 @@ type Surface struct {
     Pos string
 } 
 
-type Surfaces struct {
-    []Surface
-}
+type Surfaces []Surface
 
-func tokenize(s Master.Sentence)(Surfaces) {
+func Tokenize(s Master) Surfaces {
 	t := tokenizer.New()
-	tokens := t.Analyze(s, tokenizer.Normal)
+	tokens := t.Analyze(s.Sentence, tokenizer.Normal)
     var surf Surfaces
     for _, token := range tokens {
-        surf = append(surf, &Surface{token.Surface, token.Pos()})
+        surf = append(surf, Surface{token.Surface, token.Pos()})
     }
     return surf
 }
