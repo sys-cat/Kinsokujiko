@@ -1,13 +1,13 @@
 hash: 5b3fe0af78fb5b3d20f8f9600128e5f53068514c4d65f30af771708e70264f88
-updated: 2017-01-10T12:08:53.793594+09:00
+updated: 2017-01-10T12:45:20.489499312+09:00
 imports:
 - name: github.com/gin-gonic/gin
-  version: e2212d40c62a98b388a5eb48ecbdcf88534688ba
+  version: 3d002e382355cafc15d706b92899b1961d5b79e9
   subpackages:
   - binding
   - render
 - name: github.com/golang/protobuf
-  version: 2402d76f3d41f928c7902a765dfc872356dd3aad
+  version: 8d92cf5fc15a4382f8964b08e1f42a75c0591aa3
   subpackages:
   - proto
 - name: github.com/ikawaha/kagome
@@ -34,7 +34,7 @@ imports:
 - name: github.com/mattn/go-isatty
   version: 30a891c33c7cde7b02a981314b4228ec99380cca
 - name: github.com/sys-cat/Kinsokujiko
-  version: 1ba3f7af79d57d20d54a9cd1c2d3ffd5b503f038
+  version: c8d39be5f50876076f4a44f05b4f7f9c608e3b82
 - name: github.com/tylerb/graceful
   version: d37e108c89765a8e307f15b8fb2ecd10575da6bb
 - name: github.com/valyala/fasttemplate
@@ -45,7 +45,7 @@ imports:
   - acme
   - acme/autocert
 - name: golang.org/x/net
-  version: 77412025ac6f6821b4938edeb45af939de5cccec
+  version: 1dd0d85fc0634d2dbe7f7d06d176c2ff548e6332
   subpackages:
   - context
   - context/ctxhttp
@@ -54,7 +54,5 @@ imports:
   subpackages:
   - unix
 - name: gopkg.in/go-playground/validator.v8
-  version: c193cecd124b5cc722d7ee5538e945bdb3348435
-- name: gopkg.in/yaml.v2
-  version: a5b47d31c556af34a302ce5d659e6fea44d90de0
+  version: 014792cf3e266caff1e916876be12282b33059e0
 testImports: []

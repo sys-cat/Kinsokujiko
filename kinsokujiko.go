@@ -20,7 +20,9 @@ func Tokenize(s Master) Surfaces {
 	tokens := t.Analyze(s.Sentence, tokenizer.Normal)
 	var surf Surfaces
 	for _, token := range tokens {
-		surf = append(surf, Surface{token.Surface, token.Pos()})
+		if token.Pos() != "" {
+			surf = append(surf, Surface{token.Surface, token.Pos()})
+		}
 	}
 	return surf
 }
