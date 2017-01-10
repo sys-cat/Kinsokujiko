@@ -1,4 +1,4 @@
-package kinsokujiko
+package Kinsokujiko
 
 import (
 	"github.com/ikawaha/kagome/tokenizer"
@@ -9,18 +9,18 @@ type Master struct {
 }
 
 type Surface struct {
-    Surf string
-    Pos string
-} 
+	Surf string
+	Pos  string
+}
 
 type Surfaces []Surface
 
 func Tokenize(s Master) Surfaces {
 	t := tokenizer.New()
 	tokens := t.Analyze(s.Sentence, tokenizer.Normal)
-    var surf Surfaces
-    for _, token := range tokens {
-        surf = append(surf, Surface{token.Surface, token.Pos()})
-    }
-    return surf
+	var surf Surfaces
+	for _, token := range tokens {
+		surf = append(surf, Surface{token.Surface, token.Pos()})
+	}
+	return surf
 }

@@ -1,6 +1,25 @@
 hash: 5b3fe0af78fb5b3d20f8f9600128e5f53068514c4d65f30af771708e70264f88
-updated: 2017-01-09T17:38:00.121192372+09:00
+updated: 2017-01-10T12:08:53.793594+09:00
 imports:
+- name: github.com/gin-gonic/gin
+  version: e2212d40c62a98b388a5eb48ecbdcf88534688ba
+  subpackages:
+  - binding
+  - render
+- name: github.com/golang/protobuf
+  version: 2402d76f3d41f928c7902a765dfc872356dd3aad
+  subpackages:
+  - proto
+- name: github.com/ikawaha/kagome
+  version: ee93139d1ff0f5639069b05868b2470c60c995f8
+  subpackages:
+  - internal/da
+  - internal/dic
+  - internal/dic/data
+  - internal/lattice
+  - tokenizer
+- name: github.com/k0kubun/pp
+  version: f5dce6ed0ccf6c350f1679964ff6b61f3d6d2033
 - name: github.com/labstack/echo
   version: 8d504c1b699c757b267255c53b3e5219f9974abc
 - name: github.com/labstack/gommon
@@ -8,21 +27,25 @@ imports:
   subpackages:
   - color
   - log
+- name: github.com/manucorporat/sse
+  version: ee05b128a739a0fb76c7ebd3ae4810c1de808d6d
 - name: github.com/mattn/go-colorable
   version: d228849504861217f796da67fae4f6e347643f15
 - name: github.com/mattn/go-isatty
   version: 30a891c33c7cde7b02a981314b4228ec99380cca
+- name: github.com/sys-cat/Kinsokujiko
+  version: 1ba3f7af79d57d20d54a9cd1c2d3ffd5b503f038
 - name: github.com/tylerb/graceful
   version: d37e108c89765a8e307f15b8fb2ecd10575da6bb
 - name: github.com/valyala/fasttemplate
   version: 3b874956e03f1636d171bda64b130f9135f42cff
 - name: golang.org/x/crypto
-  version: c3b1d0d6d8690eaebe3064711b026770cc37efa3
+  version: 1d77d5bd477a5879ed443a73e11a1a3dd9616d03
   subpackages:
   - acme
   - acme/autocert
 - name: golang.org/x/net
-  version: da2b4fa28524a3baf148c1b94df4440267063c88
+  version: 77412025ac6f6821b4938edeb45af939de5cccec
   subpackages:
   - context
   - context/ctxhttp
@@ -30,4 +53,8 @@ imports:
   version: d75a52659825e75fff6158388dddc6a5b04f9ba5
   subpackages:
   - unix
+- name: gopkg.in/go-playground/validator.v8
+  version: c193cecd124b5cc722d7ee5538e945bdb3348435
+- name: gopkg.in/yaml.v2
+  version: a5b47d31c556af34a302ce5d659e6fea44d90de0
 testImports: []

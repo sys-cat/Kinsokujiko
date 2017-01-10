@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/labstack/echo"
-	kinsokujiko "github.com/sys-cat/Kinsokujiko"
+	"github.com/sys-cat/Kinsokujiko"
 )
 
 type Kinsoku struct {
@@ -18,7 +18,7 @@ func main() {
 		if err := c.Bind(u); err != nil {
 			return c.String(http.StatusNotFound, err.Error())
 		}
-		kin := kinsokujiko.Tokenize(kinsokujiko.Master{u.Sentence})
+		kin := Kinsokujiko.Tokenize(Kinsokujiko.Master{u.Sentence})
 		return c.JSON(http.StatusOK, kin)
 	})
 	e.Logger.Fatal(e.Start(":9090"))
