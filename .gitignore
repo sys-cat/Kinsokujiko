@@ -24,4 +24,8 @@ _testmain.go
 *.test
 *.prof
 
-vendor/*
+/vendor/*
+!/vendor/.keep
+/dic/*
+!/dic/.keep
+/.glide/*
