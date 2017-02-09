@@ -20,26 +20,6 @@ type Surface struct {
 // Surfaces is Slice any Surface
 type Surfaces []Surface
 
-// Item is dictionary Item
-type Item struct {
-	Name  string
-	Slice string
-	Kana  string
-	Pos   string
-}
-
-// Dictionary is Slice any Item
-type Dictionary []Item
-
-// Target is Mask Target
-type Target struct {
-	Name string
-	Pos  string
-}
-
-// Targets is Slice any Target
-type Targets []Target
-
 // Run is Masking Sentence what use Tokenize method.
 func Run(s Master, t Targets) (string, error) {
 	return "", errors.New("anything is bad")
