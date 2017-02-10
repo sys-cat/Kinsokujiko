@@ -21,5 +21,25 @@ func main() {
 		kin := Kinsokujiko.Tokenize(Kinsokujiko.Master{u.Sentence})
 		return c.JSON(http.StatusOK, kin)
 	})
+	// Dictionary
+	e.GET("/dictionary/read", func(c echo.Context) error {
+		return c.JSON(http.StatusOK, "/dictionary/read")
+	})
+	e.POST("/dictionary/update", func(c echo.Context) error {
+		return c.JSON(http.StatusOK, "/dictionary/update")
+	})
+	// Targets
+	e.PUT("/targets/create", func(c echo.Context) error {
+		return c.JSON(http.StatusOK, "/targets/create")
+	})
+	e.GET("/targets/read", func(c echo.Context) error {
+		return c.JSON(http.StatusOK, "/targets/read")
+	})
+	e.POST("/targets/update", func(c echo.Context) error {
+		return c.JSON(http.StatusOK, "/targets/update")
+	})
+	e.DELETE("/targets/delete", func(c echo.Context) error {
+		return c.JSON(http.StatusOK, "/targets/delete")
+	})
 	e.Logger.Fatal(e.Start(":9090"))
 }
