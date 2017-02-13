@@ -1,8 +1,8 @@
 hash: 5b3fe0af78fb5b3d20f8f9600128e5f53068514c4d65f30af771708e70264f88
-updated: 2017-01-10T14:53:28.07342601+09:00
+updated: 2017-02-13T19:17:28.927719567+09:00
 imports:
 - name: github.com/ikawaha/kagome
-  version: ee93139d1ff0f5639069b05868b2470c60c995f8
+  version: c84ace3f3d49e4e20d3f9726a3f7a483aaa1ff5b
   subpackages:
   - internal/da
   - internal/dic
@@ -17,17 +17,19 @@ imports:
   - color
   - log
 - name: github.com/mattn/go-colorable
-  version: d228849504861217f796da67fae4f6e347643f15
+  version: 5411d3eea5978e6cdc258b30de592b60df6aba96
 - name: github.com/mattn/go-isatty
-  version: 30a891c33c7cde7b02a981314b4228ec99380cca
+  version: 281032e84ae07510239465db46bf442aa44b953a
 - name: github.com/sys-cat/Kinsokujiko
-  version: 054a118d8a2846b72f1e7cec8f7618934b9b4162
+  version: a977bc6812bc0dad544331f06f46f63e6b855232
 - name: github.com/tylerb/graceful
-  version: d37e108c89765a8e307f15b8fb2ecd10575da6bb
+  version: 4654dfbb6ad53cb5e27f37d99b02e16c1872fbbb
+- name: github.com/valyala/bytebufferpool
+  version: e746df99fe4a3986f4d4f79e13c1e0117ce9c2f7
 - name: github.com/valyala/fasttemplate
-  version: 3b874956e03f1636d171bda64b130f9135f42cff
+  version: d090d65668a286d9a180d43a19dfdc5dcad8fe88
 - name: golang.org/x/crypto
-  version: 1d77d5bd477a5879ed443a73e11a1a3dd9616d03
+  version: 453249f01cfeb54c3d549ddb75ff152ca243f9d8
   subpackages:
   - acme
   - acme/autocert
@@ -37,7 +39,7 @@ imports:
   - context
   - context/ctxhttp
 - name: golang.org/x/sys
-  version: d75a52659825e75fff6158388dddc6a5b04f9ba5
+  version: aaabbdc969c3935a2a7f61efac801e7163c73a2a
   subpackages:
   - unix
 testImports: []

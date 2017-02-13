@@ -1,8 +1,6 @@
 # Kinsokujiko
-Mask ng-word powered by MeCab
+Mask ng-word using by Kagome
 
-## Description
 
-using MeCab.Please install MeCab.
 
 
