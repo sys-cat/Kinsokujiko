@@ -10,3 +10,5 @@ type Item struct {
 
 // Dictionary is Slice any Item
 type Dictionary []Item
+
+var dicPaht = "_dic/dic.txt"
