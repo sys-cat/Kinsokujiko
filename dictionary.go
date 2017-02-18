@@ -54,10 +54,10 @@ func _check_item(it Item) bool {
 func _add_item(dic Dictionary) (string, error) {
 	dir, _ := os.Getwd()
 	dicPath := fmt.Sprintf("%s/%s", dir, dicPath)
-	file, err := os.OpenFile(dicPath, os.O_RDWR|os.O_CREATE, 0755)
-	defer file.Close()
-	read, _ := ioutil.ReadAll(file)
-	res := fmt.Sprintf("ファイルの詳細：%+v", read)
+	//file, err := os.OpenFile(dicPath, os.O_RDWR|os.O_CREATE, 0755)
+	file, err := ioutil.ReadFile(dicPath)
+	//defer file.Close()
+	res := fmt.Sprintf("ファイルの詳細：%+v", file)
 	return res, err
 }
 
