@@ -56,9 +56,8 @@ func _add_item(dic Dictionary) (string, error) {
 	dicPath := fmt.Sprintf("%s/%s", dir, dicPath)
 	file, err := os.OpenFile(dicPath, os.O_RDWR|os.O_CREATE, 0755)
 	defer file.Close()
-	scan := bufio.NewScanner(file)
-	scan.Scan()
-	res := fmt.Sprintf("ファイルの詳細：%+v", scan.Text())
+	read := bufio.NewReader(file)
+	res := fmt.Sprintf("ファイルの詳細：%+v", read)
 	return res, err
 }
 
