@@ -4,7 +4,6 @@ import (
 	"errors"
 	"fmt"
 	"os"
-	"path"
 	"strings"
 )
 
@@ -52,7 +51,7 @@ func _check_item(it Item) bool {
 }
 
 func _add_item(dic Dictionary) (string, error) {
-	dir := path.Dir(".")
+	dir, _ := os.Getwd()
 	dicPath := fmt.Sprintf("%s/%s", dir, dicPath)
 	file, err := os.OpenFile(dicPath, os.O_RDWR|os.O_CREATE, 0755)
 	defer file.Close()
