@@ -1,6 +1,7 @@
 package Kinsokujiko
 
 import (
+	"bufio"
 	"errors"
 	"fmt"
 	"os"
@@ -55,7 +56,9 @@ func _add_item(dic Dictionary) (string, error) {
 	dicPath := fmt.Sprintf("%s/%s", dir, dicPath)
 	file, err := os.OpenFile(dicPath, os.O_RDWR|os.O_CREATE, 0755)
 	defer file.Close()
-	res := fmt.Sprintf("ファイルの詳細：%+v", file)
+	scan := bufio.NewScanner(file)
+	scan.Scan()
+	res := fmt.Sprintf("ファイルの詳細：%+v", scan.Text())
 	return res, err
 }
 
