@@ -52,11 +52,9 @@ func _check_item(it Item) bool {
 
 func _add_item(dic Dictionary) (string, error) {
 	file, err := os.OpenFile(dicPath, os.O_RDWR|os.O_CREATE, 0755)
-	if err != nil {
-	}
 	defer file.Close()
 	res := fmt.Sprintf("ファイルの詳細：%+v", file)
-	return res, nil
+	return res, err
 }
 
 func Show() (Dictionary, error) {
