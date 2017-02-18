@@ -11,10 +11,10 @@ import (
 
 // Item is dictionary Item
 type Item struct {
-	Surf  string `json:"surf" form:"surf"`
-	Slice string `json:"slice" form:"slice"`
-	Kana  string `json:"kana" form:"kana"`
-	Pos   string `json:"pos" form:"pos"`
+	Surf  string
+	Slice string
+	Kana  string
+	Pos   string
 }
 
 // Dictionary is Slice any Item
