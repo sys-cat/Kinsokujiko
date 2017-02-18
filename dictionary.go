@@ -1,9 +1,9 @@
 package Kinsokujiko
 
 import (
-	"bufio"
 	"errors"
 	"fmt"
+	"io/ioutil"
 	"os"
 	"strings"
 )
@@ -56,7 +56,7 @@ func _add_item(dic Dictionary) (string, error) {
 	dicPath := fmt.Sprintf("%s/%s", dir, dicPath)
 	file, err := os.OpenFile(dicPath, os.O_RDWR|os.O_CREATE, 0755)
 	defer file.Close()
-	read := bufio.NewReader(file)
+	read, _ := ioutil.ReadAll(file)
 	res := fmt.Sprintf("ファイルの詳細：%+v", read)
 	return res, err
 }
