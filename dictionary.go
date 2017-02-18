@@ -20,14 +20,14 @@ type Dictionary []Item
 
 var dicPath = "_dic/dic.txt"
 
-func Update(dic Dictionary) (bool, error) {
+func Update(dic Dictionary) (string, error) {
 	_, err := _add_item(dic)
 	if err != nil {
 		fmt.Print(err)
 	}
 	for index, item := range dic {
 		if !_check_item(item) {
-			return false, errors.New(fmt.Sprintf("%d 行目に問題があるようです", index))
+			return "Error", errors.New(fmt.Sprintf("%d 行目に問題があるようです", index))
 		}
 	}
 	return _add_item(dic)
@@ -50,13 +50,13 @@ func _check_item(it Item) bool {
 	return res
 }
 
-func _add_item(dic Dictionary) (bool, error) {
+func _add_item(dic Dictionary) (string, error) {
 	file, err := os.OpenFile(dicPath, os.O_RDWR|os.O_CREATE, 0755)
 	if err != nil {
 	}
 	defer file.Close()
-	fmt.Sprintf("ファイルの詳細：%+v", file)
-	return true, nil
+	res := fmt.Sprintf("ファイルの詳細：%+v", file)
+	return res, nil
 }
 
 func Show() (Dictionary, error) {
