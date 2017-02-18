@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"os"
+	"path"
 	"strings"
 )
 
@@ -23,7 +24,7 @@ var dicPath = "_dic/dic.txt"
 func Update(dic Dictionary) (string, error) {
 	_, err := _add_item(dic)
 	if err != nil {
-		fmt.Print(err)
+		fmt.Println(err)
 	}
 	for index, item := range dic {
 		if !_check_item(item) {
@@ -51,6 +52,8 @@ func _check_item(it Item) bool {
 }
 
 func _add_item(dic Dictionary) (string, error) {
+	dir := path.Dir(".")
+	dicPath := fmt.Sprintf("%s/%s", dir, dicPath)
 	file, err := os.OpenFile(dicPath, os.O_RDWR|os.O_CREATE, 0755)
 	defer file.Close()
 	res := fmt.Sprintf("ファイルの詳細：%+v", file)
