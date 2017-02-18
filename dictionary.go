@@ -1,6 +1,7 @@
 package Kinsokujiko
 
 import (
+	"bufio"
 	"errors"
 	"fmt"
 	"io/ioutil"
@@ -21,14 +22,10 @@ type Dictionary []Item
 
 var dicPath = "_dic/dic.txt"
 
-func Update(dic Dictionary) (string, error) {
-	_, err := _add_item(dic)
-	if err != nil {
-		fmt.Println(err)
-	}
+func Update(dic Dictionary) (bool, error) {
 	for index, item := range dic {
 		if !_check_item(item) {
-			return "Error", errors.New(fmt.Sprintf("%d 行目に問題があるようです", index))
+			return false, errors.New(fmt.Sprintf("%d 行目に問題があるようです", index))
 		}
 	}
 	return _add_item(dic)
@@ -51,18 +48,50 @@ func _check_item(it Item) bool {
 	return res
 }
 
-func _add_item(dic Dictionary) (string, error) {
+func _add_item(dic Dictionary) (bool, error) {
 	dir, _ := os.Getwd()
 	dicPath := fmt.Sprintf("%s/%s", dir, dicPath)
 	file, err := os.OpenFile(dicPath, os.O_RDWR|os.O_CREATE, 0755)
+	if err != nil {
+		return false, err
+	}
 	defer file.Close()
 	read, _ := ioutil.ReadAll(file)
-	res := fmt.Sprintf("ファイルの詳細：%+v", string(read))
-	return res, err
+	items := string(read)
+	for _, varible := range dic {
+		items = items + fmt.Sprintf("%s,%s,%s,%s\n", varible.Surf, varible.Slice, varible.Kana, varible.Pos)
+	}
+	rerr := ioutil.WriteFile(dicPath, []byte(items), os.ModePerm)
+	res := true
+	if rerr != nil {
+		res = false
+	}
+	return res, rerr
 }
 
 func Show() (Dictionary, error) {
-	return Dictionary{}, nil
+	return _get_dic()
 }
 
-func _get_dic() {}
+func _get_dic() (Dictionary, error) {
+	dir, _ := os.Getwd()
+	dicPath := fmt.Sprintf("%s/%s", dir, dicPath)
+	file, err := os.OpenFile(dicPath, os.O_RDWR|os.O_CREATE, 0755)
+	if err != nil {
+		return Dictionary{}, err
+	}
+	defer file.Close()
+	scnr := bufio.NewScanner(file)
+	var dic Dictionary
+	for scnr.Scan() {
+		sp := strings.Split(scnr.Text(), ",")
+		dic = append(dic, Item{
+			sp[0],
+			sp[1],
+			sp[2],
+			sp[3],
+		})
+	}
+
+	return dic, err
+}
