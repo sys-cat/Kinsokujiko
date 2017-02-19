@@ -1,5 +1,5 @@
-hash: 4916df700f77ff968070b00ddc54b345936aa2fde6c4190206a5aededf3b12c3
-updated: 2017-02-19T15:05:31.711819573+09:00
+hash: 6f700e8a5c29610bdbdf08a59b5b77be78c1cd2086381e633c8afdd8949cd385
+updated: 2017-02-19T15:04:31.117994688+09:00
 imports:
 - name: github.com/ikawaha/kagome
   version: c84ace3f3d49e4e20d3f9726a3f7a483aaa1ff5b
