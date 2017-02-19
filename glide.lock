@@ -1,5 +1,5 @@
-hash: 4916df700f77ff968070b00ddc54b345936aa2fde6c4190206a5aededf3b12c3
-updated: 2017-02-19T15:05:31.711819573+09:00
+hash: 81864b8b95915df43b6cbd90658f6d80054c64e17b84846644a9d7d1acf5ec18
+updated: 2017-02-19T15:14:21.940426546+09:00
 imports:
 - name: github.com/ikawaha/kagome
   version: c84ace3f3d49e4e20d3f9726a3f7a483aaa1ff5b
@@ -22,8 +22,6 @@ imports:
   version: 30a891c33c7cde7b02a981314b4228ec99380cca
 - name: github.com/mattn/go-sqlite3
   version: 2acfafad5870400156f6fceb12852c281cbba4d5
-- name: github.com/sys-cat/Kinsokujiko
-  version: a430695ccac6f11b36f61c901758007530b0fbeb
 - name: github.com/tylerb/graceful
   version: d37e108c89765a8e307f15b8fb2ecd10575da6bb
 - name: github.com/valyala/fasttemplate
