@@ -5,6 +5,7 @@ import (
 
 	"github.com/labstack/echo"
 	"github.com/sys-cat/Kinsokujiko"
+	kTargets "github.com/sys-cat/Kinsokujiko/Targets"
 )
 
 // Kinsoku is masking sentence
@@ -22,6 +23,20 @@ type Item struct {
 
 // Dictionary is Slice any Item
 type Dictionary []Item
+
+// Target is Mask Target
+type Target struct {
+	Surf string `json:"surf" form:"surf"`
+	Pos  string `json:"pos" form:"pos"`
+	Proc string `json:"proc" form:"proc"`
+}
+
+// Targets is Slice any Target
+type Targets struct {
+	Name    string   `json:"name" form:"name"`       // ターゲット名
+	Tag     []string `json:"tag" form:"tag"`         // タグ名リスト
+	Targets []Target `json:"targets" form:"targets"` // ターゲットリスト
+}
 
 func main() {
 	e := echo.New()
@@ -61,13 +76,41 @@ func main() {
 	})
 	// Targets
 	e.PUT("/targets/create", func(c echo.Context) error {
-		return c.JSON(http.StatusOK, "/targets/create")
+		targets := new(Targets)
+		if err := c.Bind(targets); err != nil {
+			return c.JSON(http.StatusNotFound, err)
+		}
+		var ts kTargets.Targets
+		ts.Name = targets.Name
+		ts.Tag = strings.Join(targets.Tag, ",")
+		for _, t := range *ktargets.Targets {
+			ts.Targets = append(ts.Targets, kTargets.Target{Surf: t.Surf, Pos: t.Pos, Proc: t.Proc})
+		}
+		res, err := kTargets.Create(ts)
+		if err := nil {
+			return c.JSON(http.StatusInternalServerError, err)
+		}
+		return c.JSON(http.StatusOK, res)
 	})
 	e.GET("/targets/read", func(c echo.Context) error {
 		return c.JSON(http.StatusOK, "/targets/read")
 	})
 	e.POST("/targets/update", func(c echo.Context) error {
-		return c.JSON(http.StatusOK, "/targets/update")
+		targets := new(Targets)
+		if err := c.Bind(targets); err != nil {
+			return c.JSON(http.StatusNotFound, err)
+		}
+		var ts kTargets.Targets
+		ts.Name = targets.Name
+		ts.Tag = strings.Join(targets.Tag, ",")
+		for _, t := range *ktargets.Targets {
+			ts.Targets = append(ts.Targets, kTargets.Target{Surf: t.Surf, Pos: t.Pos, Proc: t.Proc})
+		}
+		res, err := kTargets.Update(ts)
+		if err := nil {
+			return c.JSON(http.StatusInternalServerError, err)
+		}
+		return c.JSON(http.StatusOK, res)
 	})
 	e.DELETE("/targets/delete", func(c echo.Context) error {
 		return c.JSON(http.StatusOK, "/targets/delete")

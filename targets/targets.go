@@ -146,12 +146,12 @@ func _updateTargets(ts Targets) error {
 	if err != nil {
 		return errors.New("cannot open database")
 	}
-	stmt, err := tx.Prepare("INSERT INTO targets(name, tag) values(?, ?)")
+	stmt, err := tx.Prepare("UPDATE targets SET name = '?', tag = '?' WHERE name = '?' and tag = '?'")
 	if err != nil {
 		return fmt.Errorf("catch error: %s", err.Error())
 	}
 	defer stmt.Close()
-	_, err = stmt.Exec(ts.Name, strings.Join(ts.Tag, ","))
+	_, err = stmt.Exec(ts.Name, strings.Join(ts.Tag, ","), ts.Name, strings.Join(ts.Tag, ","))
 	if err != nil {
 		return fmt.Errorf("cannot run sql : %s", err.Error())
 	}
