@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
+	"log"
 	"strings"
 
 	_ "github.com/mattn/go-sqlite3"
@@ -41,6 +42,15 @@ create table target(
 );
 */
 
+// Open is open database file.
+func Open() *sql.DB {
+	db, err := sql.Open(dbType, dbFile)
+	if err != nil {
+		log.Fatal("Cannot open database file")
+	}
+	return db
+}
+
 // Create is create new targets
 func Create(targets Targets) (bool, error) {
 	cherr := _checkData(targets)
@@ -55,10 +65,7 @@ func Create(targets Targets) (bool, error) {
 }
 
 func _checkData(t Targets) error {
-	db, err := sql.Open(dbType, dbFile)
-	if err != nil {
-		return errors.New("database file is not found")
-	}
+	db := Open()
 	defer db.Close()
 	sql := fmt.Sprintf("SELECT id FROM targets WHERE name = '%s';", t.Name)
 	rows, err := db.Query(sql)
@@ -73,10 +80,7 @@ func _checkData(t Targets) error {
 }
 
 func _createTargets(t Targets) error {
-	db, err := sql.Open(dbType, dbFile)
-	if err != nil {
-		return errors.New("database file is not found")
-	}
+	db := Open()
 	defer db.Close()
 	tx, err := db.Begin()
 	if err != nil {
@@ -103,10 +107,7 @@ func _createTargets(t Targets) error {
 }
 
 func _insertTarget(index int64, ts []Target) bool {
-	db, err := sql.Open(dbType, dbFile)
-	if err != nil {
-		return false
-	}
+	db := Open()
 	defer db.Close()
 	tx, err := db.Begin()
 	if err != nil {
@@ -139,10 +140,7 @@ func Update(targets Targets) (bool, error) {
 }
 
 func _updateTargets(ts Targets) error {
-	db, err := sql.Open(dbType, dbFile)
-	if err != nil {
-		return errors.New("database file is not found")
-	}
+	db := Open()
 	defer db.Close()
 	tx, err := db.Begin()
 	if err != nil {
@@ -162,10 +160,7 @@ func _updateTargets(ts Targets) error {
 }
 
 func _updateTarget(t []Target) error {
-	db, err := sql.Open(dbType, dbFile)
-	if err != nil {
-		return errors.New("database file is not found")
-	}
+	db := Open()
 	defer db.Close()
 	tx, err := db.Begin()
 	if err != nil {
@@ -188,10 +183,7 @@ func _updateTarget(t []Target) error {
 
 // Read is show targets data
 func Read(name string, tag []string) (Targets, error) {
-	db, err := sql.Open(dbType, dbFile)
-	if err != nil {
-		return Targets{}, errors.New("database file is not found")
-	}
+	db := Open()
 	defer db.Close()
 	sql := `SELECT
 		targets.id, targets.name, target.surf, target.pos, target.process
@@ -240,10 +232,7 @@ func Delete(del string, targets Targets) (bool, error) {
 }
 
 func _deleteTargets(t Targets) error {
-	db, err := sql.Open(dbType, dbFile)
-	if err != nil {
-		return errors.New("database file is not found")
-	}
+	db := Open()
 	defer db.Close()
 	sql := "DELETE FROM targets WHERE name = '?' and tag = '?'"
 	stmt, err := db.Prepare(sql)
@@ -262,10 +251,7 @@ func _deleteTargets(t Targets) error {
 }
 
 func _deleteTarget(t []Target) error {
-	db, err := sql.Open(dbType, dbFile)
-	if err != nil {
-		return errors.New("database file is not found")
-	}
+	db := Open()
 	defer db.Close()
 	sql := "DELETE FROM target WHERE surf = '?' and pos = '?'"
 	stmt, err := db.Prepare(sql)

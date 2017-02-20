@@ -33,7 +33,7 @@ func main() {
 		if err := c.Bind(u); err != nil {
 			return c.String(http.StatusNotFound, err.Error())
 		}
-		kin := Kinsokujiko.Tokenize(Kinsokujiko.Master{u.Sentence})
+		kin := Kinsokujiko.Tokenize(Kinsokujiko.Master{Sentence: u.Sentence})
 		return c.JSON(http.StatusOK, kin)
 	})
 	// Dictionary
@@ -41,9 +41,8 @@ func main() {
 		res, err := Kinsokujiko.Show()
 		if err != nil {
 			return c.JSON(http.StatusInternalServerError, err)
-		} else {
-			return c.JSON(http.StatusOK, res)
 		}
+		return c.JSON(http.StatusOK, res)
 	})
 	e.POST("/dictionary/update", func(c echo.Context) error {
 		dics := new(Dictionary)
@@ -52,14 +51,13 @@ func main() {
 		}
 		var dic Kinsokujiko.Dictionary
 		for _, d := range *dics {
-			dic = append(dic, Kinsokujiko.Item{d.Surf, d.Slice, d.Kana, d.Pos})
+			dic = append(dic, Kinsokujiko.Item{Surf: d.Surf, Slice: d.Slice, Kana: d.Kana, Pos: d.Pos})
 		}
-		res, up_err := Kinsokujiko.Update(dic)
-		if up_err != nil {
+		res, upErr := Kinsokujiko.Update(dic)
+		if upErr != nil {
 			return c.JSON(http.StatusInternalServerError, up_err)
-		} else {
-			return c.JSON(http.StatusOK, res)
 		}
+		return c.JSON(http.StatusOK, res)
 	})
 	// Targets
 	e.PUT("/targets/create", func(c echo.Context) error {
@@ -74,5 +72,7 @@ func main() {
 	e.DELETE("/targets/delete", func(c echo.Context) error {
 		return c.JSON(http.StatusOK, "/targets/delete")
 	})
+
+	// Start Server
 	e.Logger.Fatal(e.Start(":9090"))
 }
