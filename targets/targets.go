@@ -23,6 +23,9 @@ type Targets struct {
 	Targets []Target // ターゲットリスト
 }
 
+var dbType = "sqlite3"
+var dbFile = "./targets.db"
+
 /*
 create table targets(
 	id integer not null primary key,
@@ -38,70 +41,69 @@ create table target(
 );
 */
 
+// Create is create new targets
 func Create(targets Targets) (bool, error) {
-	ch_err := _check_data(targets)
-	if ch_err != nil {
-		return false, ch_err
+	cherr := _checkData(targets)
+	if cherr != nil {
+		return false, cherr
 	}
-	err := _create_targets(targets)
+	err := _createTargets(targets)
 	if err != nil {
 		return false, err
 	}
 	return true, nil
 }
 
-func _check_data(t Targets) error {
-	db, err := sql.Open("sqlite3", "./targets.db")
+func _checkData(t Targets) error {
+	db, err := sql.Open(dbType, dbFile)
 	if err != nil {
-		return errors.New("database file is not found.")
+		return errors.New("database file is not found")
 	}
 	defer db.Close()
 	sql := fmt.Sprintf("SELECT id FROM targets WHERE name = '%s';", t.Name)
 	rows, err := db.Query(sql)
 	if err != nil {
-		return errors.New(fmt.Sprintf("SQL is bad request.detai: %s", err.Error()))
+		return fmt.Errorf("SQL is bad request.detai: %s", err.Error())
 	}
 	defer rows.Close()
 	for rows.Next() {
-		return errors.New(fmt.Sprintf("%s is already exists.", t.Name))
+		return fmt.Errorf("%s is already exists", t.Name)
 	}
 	return nil
 }
 
-func _create_targets(t Targets) error {
-	db, err := sql.Open("sqlite3", "./targets.db")
+func _createTargets(t Targets) error {
+	db, err := sql.Open(dbType, dbFile)
 	if err != nil {
-		return errors.New("database file is not found.")
+		return errors.New("database file is not found")
 	}
 	defer db.Close()
 	tx, err := db.Begin()
 	if err != nil {
-		return errors.New("cannot open database.")
+		return errors.New("cannot open database")
 	}
 	stmt, err := tx.Prepare("INSERT INTO targets(name, tag) values(?, ?)")
 	if err != nil {
-		return errors.New(fmt.Sprintf("catch error: %s", err.Error()))
+		return fmt.Errorf("catch error: %s", err.Error())
 	}
 	defer stmt.Close()
 	res, err := stmt.Exec(t.Name, strings.Join(t.Tag, ","))
 	id, _ := res.LastInsertId()
 	if err != nil {
-		return errors.New(fmt.Sprintf("cannot run sql : %s", err.Error()))
+		return fmt.Errorf("cannot run sql : %s", err.Error())
 	}
 	tx.Commit()
 	if len(t.Targets) > 0 {
-		tar_res := _insert_target(id, t.Targets)
-		if tar_res {
-			return nil
-		} else {
+		tarRes := _insertTarget(id, t.Targets)
+		if !tarRes {
 			return errors.New("Cannot insert target")
 		}
 	}
 	return nil
 }
 
-func _insert_target(index int64, ts []Target) bool {
-	db, err := sql.Open("sqlite3", "./targets.db")
+func _insertTarget(index int64, ts []Target) bool {
+	db, err := sql.Open(dbType, dbFile)
 	if err != nil {
 		return false
 	}
@@ -137,47 +139,47 @@ func Update(targets Targets) (bool, error) {
 }
 
 func _updateTargets(ts Targets) error {
-	db, err := sql.Open("sqlite3", "./targets.db")
+	db, err := sql.Open(dbType, dbFile)
 	if err != nil {
-		return errors.New("database file is not found.")
+		return errors.New("database file is not found")
 	}
 	defer db.Close()
 	tx, err := db.Begin()
 	if err != nil {
-		return errors.New("cannot open database.")
+		return errors.New("cannot open database")
 	}
 	stmt, err := tx.Prepare("INSERT INTO targets(name, tag) values(?, ?)")
 	if err != nil {
-		return errors.New(fmt.Sprintf("catch error: %s", err.Error()))
+		return fmt.Errorf("catch error: %s", err.Error())
 	}
 	defer stmt.Close()
 	_, err = stmt.Exec(ts.Name, strings.Join(ts.Tag, ","))
 	if err != nil {
-		return errors.New(fmt.Sprintf("cannot run sql : %s", err.Error()))
+		return fmt.Errorf("cannot run sql : %s", err.Error())
 	}
 	tx.Commit()
 	return nil
 }
 
 func _updateTarget(t []Target) error {
-	db, err := sql.Open("sqlite3", "./targets.db")
+	db, err := sql.Open(dbType, dbFile)
 	if err != nil {
-		return errors.New("database file is not found.")
+		return errors.New("database file is not found")
 	}
 	defer db.Close()
 	tx, err := db.Begin()
 	if err != nil {
-		return errors.New("cannot open database.")
+		return errors.New("cannot open database")
 	}
 	stmt, err := tx.Prepare("UPDATE target SET surf = '?', pos = '?', proccess = '?' WHERE surf = '?', pos = '?'")
 	if err != nil {
-		return errors.New(fmt.Sprintf("catch error: %s", err.Error()))
+		return fmt.Errorf("catch error: %s", err.Error())
 	}
 	defer stmt.Close()
 	for _, v := range t {
 		_, err := stmt.Exec(v.Surf, v.Pos, v.Proc, v.Surf, v.Pos)
 		if err != nil {
-			return errors.New(fmt.Sprintf("cannot run sql : %s", err.Error()))
+			return fmt.Errorf("cannot run sql : %s", err.Error())
 		}
 	}
 	tx.Commit()
@@ -186,9 +188,9 @@ func _updateTarget(t []Target) error {
 
 // Read is show targets data
 func Read(name string, tag []string) (Targets, error) {
-	db, err := sql.Open("sqlite3", "./targets.db")
+	db, err := sql.Open(dbType, dbFile)
 	if err != nil {
-		return Targets{}, errors.New("database file is not found.")
+		return Targets{}, errors.New("database file is not found")
 	}
 	defer db.Close()
 	sql := `SELECT
@@ -200,7 +202,7 @@ func Read(name string, tag []string) (Targets, error) {
 	sql = fmt.Sprintf(sql, name, strings.Join(tag, ","))
 	rows, err := db.Query(sql)
 	if err != nil {
-		return Targets{}, errors.New(fmt.Sprintf("SQL is bad request.detai: %s", err.Error()))
+		return Targets{}, fmt.Errorf("SQL is bad request.detai: %s", err.Error())
 	}
 	defer rows.Close()
 
@@ -213,7 +215,7 @@ func Read(name string, tag []string) (Targets, error) {
 	for rows.Next() {
 		err = rows.Scan(&id, &tname, &surf, &pos, &proc)
 		if err != nil {
-			return ts, errors.New("cannot parse rows.")
+			return ts, errors.New("cannot parse rows")
 		}
 		ts.Name = tname
 		ts.Targets = append(ts.Targets, Target{surf, pos, string(proc)})
@@ -238,15 +240,15 @@ func Delete(del string, targets Targets) (bool, error) {
 }
 
 func _deleteTargets(t Targets) error {
-	db, err := sql.Open("sqlite3", "./targets.db")
+	db, err := sql.Open(dbType, dbFile)
 	if err != nil {
-		return errors.New("database file is not found.")
+		return errors.New("database file is not found")
 	}
 	defer db.Close()
 	sql := "DELETE FROM targets WHERE name = '?' and tag = '?'"
 	stmt, err := db.Prepare(sql)
 	if err != nil {
-		return errors.New(fmt.Sprintf("catch error: %s", err))
+		return fmt.Errorf("catch error: %s", err)
 	}
 	res, err := stmt.Exec(t.Name, strings.Join(t.Tag, ","))
 	if err != nil {
@@ -254,21 +256,21 @@ func _deleteTargets(t Targets) error {
 	}
 	_, err = res.RowsAffected()
 	if err != nil {
-		return errors.New(fmt.Sprintf("Get affected rows: %s", err))
+		return fmt.Errorf("Get affected rows: %s", err)
 	}
 	return nil
 }
 
 func _deleteTarget(t []Target) error {
-	db, err := sql.Open("sqlite3", "./targets.db")
+	db, err := sql.Open(dbType, dbFile)
 	if err != nil {
-		return errors.New("database file is not found.")
+		return errors.New("database file is not found")
 	}
 	defer db.Close()
 	sql := "DELETE FROM target WHERE surf = '?' and pos = '?'"
 	stmt, err := db.Prepare(sql)
 	if err != nil {
-		return errors.New(fmt.Sprintf("catch error: %s", err))
+		return fmt.Errorf("catch error: %s", err)
 	}
 	for _, tg := range t {
 		res, err := stmt.Exec(tg.Surf, tg.Pos)
@@ -277,7 +279,7 @@ func _deleteTarget(t []Target) error {
 		}
 		_, err = res.RowsAffected()
 		if err != nil {
-			return errors.New(fmt.Sprintf("Get affected rows: %s", err))
+			return fmt.Errorf("Get affected rows: %s", err)
 		}
 	}
 	return nil
