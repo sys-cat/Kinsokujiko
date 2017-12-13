@@ -1,4 +1,4 @@
-package Targets
+package targets
 
 import (
 	"database/sql"

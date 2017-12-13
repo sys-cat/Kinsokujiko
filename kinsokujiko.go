@@ -1,10 +1,10 @@
-package Kinsokujiko
+package kinsokujiko
 
 import (
 	"errors"
 
 	"github.com/ikawaha/kagome/tokenizer"
-	"github.com/sys-cat/Kinsokujiko/Targets"
+	"github.com/sys-cat/kinsokujiko/targets"
 )
 
 // Master is Master data for analyze

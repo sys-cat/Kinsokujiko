@@ -1,4 +1,4 @@
-package Kinsokujiko
+package kinsokujiko
 
 import (
 	"bufio"
