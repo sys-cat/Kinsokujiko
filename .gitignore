@@ -29,3 +29,5 @@ _testmain.go
 /dic/*
 !/dic/.keep
 /.glide/*
+glide.lock
+
