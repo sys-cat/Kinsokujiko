@@ -71,7 +71,7 @@ func main() {
 		}
 		res, upErr := kinsokujiko.Update(dic)
 		if upErr != nil {
-			return c.JSON(http.StatusInternalServerError, up_err)
+			return c.JSON(http.StatusInternalServerError, upErr)
 		}
 		return c.JSON(http.StatusOK, res)
 	})
@@ -84,7 +84,7 @@ func main() {
 		var ts kTargets.Targets
 		ts.Name = targets.Name
 		ts.Tag = strings.Join(targets.Tag, ",")
-		for _, t := range *ktargets.Targets {
+		for _, t := range targets.Targets {
 			ts.Targets = append(ts.Targets, kTargets.Target{Surf: t.Surf, Pos: t.Pos, Proc: t.Proc})
 		}
 		res, err := kTargets.Create(ts)
@@ -104,7 +104,7 @@ func main() {
 		var ts kTargets.Targets
 		ts.Name = targets.Name
 		ts.Tag = strings.Join(targets.Tag, ",")
-		for _, t := range *ktargets.Targets {
+		for _, t := range targets.Targets {
 			ts.Targets = append(ts.Targets, kTargets.Target{Surf: t.Surf, Pos: t.Pos, Proc: t.Proc})
 		}
 		res, err := kTargets.Update(ts)

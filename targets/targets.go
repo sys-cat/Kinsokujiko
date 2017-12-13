@@ -10,19 +10,21 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
-// Target is Mask Target
-type Target struct {
-	Surf string
-	Pos  string
-	Proc string
-}
+type (
+	// Target is Mask Target
+	Target struct {
+		Surf string
+		Pos  string
+		Proc string
+	}
 
-// Targets is Slice any Target
-type Targets struct {
-	Name    string   // ターゲット名
-	Tag     []string // タグ名リスト
-	Targets []Target // ターゲットリスト
-}
+	// Targets is Slice any Target
+	Targets struct {
+		Name    string   // ターゲット名
+		Tag     string   // タグ名リスト
+		Targets []Target // ターゲットリスト
+	}
+)
 
 var dbType = "sqlite3"
 var dbFile = "./targets.db"
@@ -91,7 +93,7 @@ func _createTargets(t Targets) error {
 		return fmt.Errorf("catch error: %s", err.Error())
 	}
 	defer stmt.Close()
-	res, err := stmt.Exec(t.Name, strings.Join(t.Tag, ","))
+	res, err := stmt.Exec(t.Name, t.Tag)
 	id, _ := res.LastInsertId()
 	if err != nil {
 		return fmt.Errorf("cannot run sql : %s", err.Error())
@@ -151,7 +153,7 @@ func _updateTargets(ts Targets) error {
 		return fmt.Errorf("catch error: %s", err.Error())
 	}
 	defer stmt.Close()
-	_, err = stmt.Exec(ts.Name, strings.Join(ts.Tag, ","), ts.Name, strings.Join(ts.Tag, ","))
+	_, err = stmt.Exec(ts.Name, ts.Tag, ts.Name, ts.Tag)
 	if err != nil {
 		return fmt.Errorf("cannot run sql : %s", err.Error())
 	}
@@ -239,7 +241,7 @@ func _deleteTargets(t Targets) error {
 	if err != nil {
 		return fmt.Errorf("catch error: %s", err)
 	}
-	res, err := stmt.Exec(t.Name, strings.Join(t.Tag, ","))
+	res, err := stmt.Exec(t.Name, t.Tag)
 	if err != nil {
 		return errors.New("Bad Request")
 	}

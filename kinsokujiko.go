@@ -22,7 +22,7 @@ type Surface struct {
 type Surfaces []Surface
 
 // Run is Masking Sentence what use Tokenize method.
-func Run(s Master, t Targets.Targets) (string, error) {
+func Run(s Master, t targets.Targets) (string, error) {
 	return "", errors.New("anything is bad")
 }
 
