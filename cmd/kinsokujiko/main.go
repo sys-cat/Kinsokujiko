@@ -49,12 +49,12 @@ func main() {
 		if err := c.Bind(u); err != nil {
 			return c.String(http.StatusNotFound, err.Error())
 		}
-		kin := Kinsokujiko.Tokenize(Kinsokujiko.Master{Sentence: u.Sentence})
+		kin := kinsokujiko.Tokenize(kinsokujiko.Master{Sentence: u.Sentence})
 		return c.JSON(http.StatusOK, kin)
 	})
 	// Dictionary
 	e.GET("/dictionary/read", func(c echo.Context) error {
-		res, err := Kinsokujiko.Show()
+		res, err := kinsokujiko.Show()
 		if err != nil {
 			return c.JSON(http.StatusInternalServerError, err)
 		}
@@ -65,11 +65,11 @@ func main() {
 		if err := c.Bind(dics); err != nil {
 			return c.JSON(http.StatusNotFound, err)
 		}
-		var dic Kinsokujiko.Dictionary
+		var dic kinsokujiko.Dictionary
 		for _, d := range *dics {
-			dic = append(dic, Kinsokujiko.Item{Surf: d.Surf, Slice: d.Slice, Kana: d.Kana, Pos: d.Pos})
+			dic = append(dic, kinsokujiko.Item{Surf: d.Surf, Slice: d.Slice, Kana: d.Kana, Pos: d.Pos})
 		}
-		res, upErr := Kinsokujiko.Update(dic)
+		res, upErr := kinsokujiko.Update(dic)
 		if upErr != nil {
 			return c.JSON(http.StatusInternalServerError, up_err)
 		}

@@ -26,6 +26,8 @@ _testmain.go
 
 /vendor/*
 !/vendor/.keep
+/cmd/kinsokujiko/vendor/*
+!/cmd/kinsokujiko/vendor/.keep
 /dic/*
 !/dic/.keep
 /.glide/*

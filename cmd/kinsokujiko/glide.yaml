@@ -1,4 +1,4 @@
-package: github.com/sys-cat/Kinsokujiko
+package: github.com/sys-cat/kinsokujiko/cmd/kinsokujiko
 imports:
 - package: github.com/labstack/echo
   version: ~3.0.0
