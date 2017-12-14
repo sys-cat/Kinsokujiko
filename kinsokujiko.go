@@ -7,19 +7,21 @@ import (
 	"github.com/sys-cat/kinsokujiko/targets"
 )
 
-// Master is Master data for analyze
-type Master struct {
-	Sentence string
-}
+type (
+	// Master is Master data for analyze
+	Master struct {
+		Sentence string
+	}
 
-// Surface is surface, pos pair
-type Surface struct {
-	Surf string
-	Pos  string
-}
+	// Surface is surface, pos pair
+	Surface struct {
+		Surf string
+		Pos  string
+	}
 
-// Surfaces is Slice any Surface
-type Surfaces []Surface
+	// Surfaces is Slice any Surface
+	Surfaces []Surface
+)
 
 // Run is Masking Sentence what use Tokenize method.
 func Run(s Master, t targets.Targets) (string, error) {
@@ -27,8 +29,19 @@ func Run(s Master, t targets.Targets) (string, error) {
 }
 
 // Tokenize is analyze sentence method
-func Tokenize(s Master) Surfaces {
-	t := tokenizer.New()
+func Tokenize(s Master, path string) Surfaces {
+	var udic tokenizer.UserDic
+	if path != "" {
+		udic, err := tokenizer.NewUserDic(path)
+		if err != nil {
+			return Surfaces{}
+		}
+	}
+	t := tokenizer.NewWithDic(tokenizer.SysDic())
+	t.SetUserDic(udic)
+	if udic != tokenizer.UserDic {
+		return Surfaces{}
+	}
 	tokens := t.Analyze(s.Sentence, tokenizer.Normal)
 	var surf Surfaces
 	for _, token := range tokens {

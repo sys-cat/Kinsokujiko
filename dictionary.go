@@ -5,7 +5,9 @@ import (
 	"errors"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"os"
+	"regexp"
 	"strings"
 )
 
@@ -69,28 +71,40 @@ func _add_item(dic Dictionary) (bool, error) {
 	return res, rerr
 }
 
-func Show() (Dictionary, error) {
-	return _get_dic()
+func Show(path string) (Dictionary, error) {
+	return _get_dic(path)
 }
 
-func _get_dic() (Dictionary, error) {
-	dir, _ := os.Getwd()
-	dicPath := fmt.Sprintf("%s/%s", dir, dicPath)
+func _get_dic(path string) (Dictionary, error) {
+	var dicPath string
+	if path != "" {
+		dicPath = path
+	}
+	if dicPath == "" {
+		dir, _ := os.Getwd()
+		dicPath = fmt.Sprintf("%s/%s", dir, dicPath)
+	}
+	log.Println(fmt.Sprintf("open dictionary file is %s", dicPath))
 	file, err := os.OpenFile(dicPath, os.O_RDWR|os.O_CREATE, 0755)
 	if err != nil {
 		return Dictionary{}, err
 	}
 	defer file.Close()
-	scnr := bufio.NewScanner(file)
+	scanner := bufio.NewScanner(file)
 	var dic Dictionary
-	for scnr.Scan() {
-		sp := strings.Split(scnr.Text(), ",")
-		dic = append(dic, Item{
-			sp[0],
-			sp[1],
-			sp[2],
-			sp[3],
-		})
+	r := regexp.MustCompile(`^\#`)
+	for scanner.Scan() {
+		sp := strings.Split(scanner.Text(), ",")
+		if len(sp) >= 4 {
+			if !r.MatchString(sp[0]) { // 先頭に#が付くとコメント
+				dic = append(dic, Item{
+					sp[0],
+					sp[1],
+					sp[2],
+					sp[3],
+				})
+			}
+		}
 	}
 
 	return dic, err

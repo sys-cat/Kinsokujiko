@@ -1,7 +1,9 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
+	"os"
 	"strings"
 
 	"github.com/labstack/echo"
@@ -49,12 +51,13 @@ func main() {
 		if err := c.Bind(u); err != nil {
 			return c.String(http.StatusNotFound, err.Error())
 		}
-		kin := kinsokujiko.Tokenize(kinsokujiko.Master{Sentence: u.Sentence})
+		kin := kinsokujiko.Tokenize(kinsokujiko.Master{Sentence: u.Sentence}, os.Getenv("USERDIC"))
 		return c.JSON(http.StatusOK, kin)
 	})
 	// Dictionary
 	e.GET("/dictionary/read", func(c echo.Context) error {
-		res, err := kinsokujiko.Show()
+		path, _ := os.Getwd()
+		res, err := kinsokujiko.Show(fmt.Sprintf("%s/_dic/dic.txt", path))
 		if err != nil {
 			return c.JSON(http.StatusInternalServerError, err)
 		}
