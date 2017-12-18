@@ -2,6 +2,7 @@ package kinsokujiko
 
 import (
 	"errors"
+	"log"
 
 	"github.com/ikawaha/kagome/tokenizer"
 	"github.com/sys-cat/kinsokujiko/targets"
@@ -31,17 +32,13 @@ func Run(s Master, t targets.Targets) (string, error) {
 // Tokenize is analyze sentence method
 func Tokenize(s Master, path string) Surfaces {
 	var udic tokenizer.UserDic
-	if path != "" {
-		udic, err := tokenizer.NewUserDic(path)
-		if err != nil {
-			return Surfaces{}
-		}
+	udic, err := tokenizer.NewUserDic(path)
+	if err != nil {
+		log.Println(err)
+		return Surfaces{}
 	}
 	t := tokenizer.NewWithDic(tokenizer.SysDic())
 	t.SetUserDic(udic)
-	if udic != tokenizer.UserDic {
-		return Surfaces{}
-	}
 	tokens := t.Analyze(s.Sentence, tokenizer.Normal)
 	var surf Surfaces
 	for _, token := range tokens {
